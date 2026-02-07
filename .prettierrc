@@ -1,0 +1,46 @@
+{
+  "endOfLine": "auto",
+  "singleQuote": true,
+  "semi": true,
+  "printWidth": 95,
+  "jsxSingleQuote": false,
+  "tabWidth": 2,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "jsxBracketSameLine": false,
+  "useTabs": false,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^react$",
+    "^react-(.*)$",
+    "^@reduxjs/(.*)$",
+    "^@?\\w",
+    "^@/store/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/utils/(.*)$",
+    "^@/common-ui/(.*)$",
+    "^@/features/(.*)$",
+    "^@/pages/(.*)$",
+    "^@/assets/(.*)$",
+    "^@/styles/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "parser": "babel"
+      }
+    },
+    {
+      "files": "*.styled.js",
+      "options": {
+        "parser": "babel"
+      }
+    }
+  ]
+}

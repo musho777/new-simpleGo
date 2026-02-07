@@ -1,0 +1,38 @@
+name: CRM front CI/CD Pipeline
+
+on: 
+  pull_request:
+    branches:
+      - dev
+    types:
+      - closed
+
+jobs: 
+  build-and-deploy: 
+    if: github.event.pull_request.merged == true
+    runs-on: [self-hosted,"39"]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Pull last changes
+      run: |
+        cd /home/user/fnet_crm_frontend/crm-front
+        pwd
+        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/family-network-company/crm-front.git dev
+
+    - name: Install dependencies
+      run: |
+        pwd
+        npm install
+
+    - name: Build frontend
+      run: | 
+        pwd
+        CI=false npm run build
+
+    - name: Copy build files
+      run: |
+        cp -R build/* /var/www/html/
+        sudo systemctl restart nginx
