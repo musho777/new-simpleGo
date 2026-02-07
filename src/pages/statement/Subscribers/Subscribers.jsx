@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getHalfYearlySubscribers } from 'features/statement/statementActions';
 import {
   selectHalfYearlySubscribers,
-  selectStatementError,
   selectStatementLoading,
 } from 'features/statement/statementSlice';
 import MuiTable from 'modules/billing/components/muiTable/MuiTable';
@@ -28,8 +27,6 @@ const Subscribers = () => {
 
   const data = useSelector(selectHalfYearlySubscribers);
   const loading = useSelector(selectStatementLoading);
-  console.log(data);
-  const error = useSelector(selectStatementError);
   const dispatch = useDispatch();
 
   const columns = [
@@ -44,6 +41,8 @@ const Subscribers = () => {
     { id: 'total', label: 'Ընդհանուր' },
   ];
 
+  const hasAllFilters =
+    subscribersSearchData.fromYear !== '' && subscribersSearchData.toYear !== '';
   useEffect(() => {
     dispatch(getHalfYearlySubscribers(subscribersSearchData));
   }, [subscribersSearchData, dispatch]);
@@ -52,14 +51,16 @@ const Subscribers = () => {
     <>
       <ViewContainer>
         <SubscribersFilters />
-        <FilterContainerSubscribers>
-          {!loading.halfYearlySubscribers && (
-            <Title className="inline_title ">
-              Ընդհանուր բաժանորդների քանակը՝
-              {Number(data.totalAmount).toLocaleString('hy-AM')}
-            </Title>
-          )}
-        </FilterContainerSubscribers>
+        {hasAllFilters && (
+          <FilterContainerSubscribers>
+            {!loading.halfYearlySubscribers && (
+              <Title className="inline_title ">
+                Ընդհանուր բաժանորդների քանակը՝
+                {Number(data.totalAmount).toLocaleString('hy-AM')}
+              </Title>
+            )}
+          </FilterContainerSubscribers>
+        )}
         <MuiTable
           rowCount={subscribersSearchData.size}
           data={data?.data || []}

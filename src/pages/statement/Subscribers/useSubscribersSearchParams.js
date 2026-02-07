@@ -2,13 +2,11 @@ import { useMemo } from 'react';
 
 import { useSearchParams } from 'react-router-dom';
 
-const currentDate = new Date();
-
 const defaultSearchData = {
-  fromYear: currentDate.getFullYear(),
-  fromHalfYear: 1,
-  toYear: currentDate.getFullYear(),
-  toHalfYear: currentDate.getMonth() < 6 ? 1 : 2,
+  fromYear: '',
+  fromHalfYear: '',
+  toYear: '',
+  toHalfYear: '',
   page: 0,
   size: 10,
 };
@@ -16,19 +14,21 @@ const defaultSearchData = {
 export const useSubscribersSearchParams = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const getNumber = (key, fallback) => {
+  const getValue = (key, fallback) => {
     const val = searchParams.get(key);
-    return val !== null ? Number(val) : fallback;
+    if (val === null) return fallback;
+    if (val === '') return '';
+    return Number(val);
   };
 
   const searchData = useMemo(
     () => ({
-      fromYear: getNumber('fromYear', defaultSearchData.fromYear),
-      fromHalfYear: getNumber('fromHalfYear', defaultSearchData.fromHalfYear),
-      toYear: getNumber('toYear', defaultSearchData.toYear),
-      toHalfYear: getNumber('toHalfYear', defaultSearchData.toHalfYear),
-      page: getNumber('page', defaultSearchData.page),
-      size: getNumber('size', defaultSearchData.size),
+      fromYear: getValue('fromYear', defaultSearchData.fromYear),
+      fromHalfYear: getValue('fromHalfYear', defaultSearchData.fromHalfYear),
+      toYear: getValue('toYear', defaultSearchData.toYear),
+      toHalfYear: getValue('toHalfYear', defaultSearchData.toHalfYear),
+      page: getValue('page', defaultSearchData.page),
+      size: getValue('size', defaultSearchData.size),
     }),
     [searchParams]
   );
@@ -52,15 +52,7 @@ export const useSubscribersSearchParams = () => {
   };
 
   const resetSearchData = () => {
-    const nextParams = new URLSearchParams();
-
-    Object.entries(defaultSearchData).forEach(([key, value]) => {
-      if (value !== null && value !== undefined && value !== '') {
-        nextParams.set(key, value);
-      }
-    });
-
-    setSearchParams(nextParams, { replace: true });
+    setSearchParams(new URLSearchParams(), { replace: true });
   };
 
   return {

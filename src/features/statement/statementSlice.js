@@ -5,7 +5,7 @@ import { getHalfYearlySubscribers, getMonthlyPayments } from './statementActions
 const initialState = {
   loading: {
     monthlyPayments: true,
-    halfYearlySubscribers: true,
+    halfYearlySubscribers: false,
   },
   error: null,
   monthlyPayments: [],
@@ -42,6 +42,7 @@ const statementSlice = createSlice({
       })
       .addCase(getHalfYearlySubscribers.rejected, (state, { payload }) => {
         state.loading.halfYearlySubscribers = false;
+        state.halfYearlySubscribers = [];
         state.error = payload;
       });
   },
