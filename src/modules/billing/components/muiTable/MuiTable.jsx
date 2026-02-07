@@ -82,6 +82,7 @@ const MuiTable = ({
   loading,
   rowCount,
   handleSortClick,
+  showPagination = true,
 }) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState(columns?.[0]?.id || '');
@@ -222,15 +223,17 @@ const MuiTable = ({
           </Paper>
           {isTablet ? (
             <FooterTablet>
-              <Pagination
-                count={rowCount}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                handleRowCountChange={handleRowCountChange}
-                dataCount={dataCount}
-                editableRowCount
-              />
+              {showPagination && (
+                <Pagination
+                  count={rowCount}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  handleRowCountChange={handleRowCountChange}
+                  dataCount={dataCount}
+                  editableRowCount
+                />
+              )}
               {(count || totalAmount) && (
                 <TitleWrapperTablet>
                   <Title>Ընդհանուր վճարման ենթակա գումար՝</Title>
@@ -252,15 +255,17 @@ const MuiTable = ({
                   </TitleCount>
                 </TitleWrapper>
               )}
-              <Pagination
-                count={rowCount}
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={handlePageChange}
-                handleRowCountChange={handleRowCountChange}
-                dataCount={dataCount}
-                editableRowCount
-              />
+              {showPagination && (
+                <Pagination
+                  count={rowCount}
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                  handleRowCountChange={handleRowCountChange}
+                  dataCount={dataCount}
+                  editableRowCount
+                />
+              )}
             </Footer>
           )}
         </>

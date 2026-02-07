@@ -16,3 +16,16 @@ export const getMonthlyPayments = createAsyncThunk(
     }
   }
 );
+
+export const getHalfYearlySubscribers = createAsyncThunk(
+  'statement/getHalfYearlySubscribers',
+  async (params, thunkAPI) => {
+    const query = buildQueryString(params);
+    try {
+      const data = await billingApiClient.get(`/report/half-yearly-subscribers?${query}`);
+      return data.data;
+    } catch (error) {
+      return handleApiError(error, thunkAPI);
+    }
+  }
+);
