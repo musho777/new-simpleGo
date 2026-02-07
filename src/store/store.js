@@ -18,6 +18,7 @@ import reportsReducer from 'features/reports/reportsSlice';
 import leadLockReducer from 'features/sales/leadLockSlice';
 import salesReducer from 'features/sales/salesSlice';
 import schedulesReducer from 'features/schedules/scheduleSlice';
+import statementReducer from 'features/statement/statementSlice';
 import teamManagementReducer from 'features/teamManagement/teamManagementSlice';
 import teamsReducer from 'features/teams/teamsSlice';
 import usersReducer from 'features/users/usersSlice';
@@ -45,6 +46,7 @@ const store = configureStore({
     leadLock: leadLockReducer,
     financeRequest: financeRequestReducer,
     quiz: quizReducer,
+    statement: statementReducer,
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

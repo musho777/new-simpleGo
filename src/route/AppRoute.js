@@ -39,6 +39,7 @@ import Products from 'pages/settings/sales/salesSalary/product';
 import SalesScript from 'pages/settings/sales/salesSalary/salesScript';
 import UserPrivilege from 'pages/settings/sales/salesSalary/userPrivilege';
 import WorkflowStatus from 'pages/settings/sales/salesSalary/workflowStatus';
+import PaymentReport from 'pages/statement/PaymentReport/PaymentReport';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -696,6 +697,17 @@ const AppRoute = () => {
         />
         <Route
           path="/customer-relationship-management/:customerId"
+          element={<PrivateRoute>{SuspendedComponent(singleCustomer)}</PrivateRoute>}
+        />
+
+        {/* Statment */}
+
+        <Route
+          path="/statement/payment-report"
+          element={<PrivateRoute>{SuspendedComponent(PaymentReport)}</PrivateRoute>}
+        />
+        <Route
+          path="/statement/subscribers"
           element={<PrivateRoute>{SuspendedComponent(singleCustomer)}</PrivateRoute>}
         />
 
