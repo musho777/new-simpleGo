@@ -179,6 +179,7 @@ const order = [
   'Archive',
   'Reports',
   'Billing Reports',
+  'Statement',
   'Inventory',
   'Sales',
   'Finance Request',

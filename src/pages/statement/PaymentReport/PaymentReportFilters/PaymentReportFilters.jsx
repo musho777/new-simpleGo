@@ -24,26 +24,44 @@ const MONTHS = [
   { value: 12, label: 'Դեկտեմբեր' },
 ];
 
-const currentYear = new Date().getFullYear();
-const YEARS = Array.from({ length: 10 }, (_, i) => currentYear - 5 + i);
+const YEARS = [2023, 2024, 2025];
 
 const PaymentReportFilters = () => {
   const { searchData, setPaymentReportSearchData, resetSearchData } =
     usePaymentReportSearchParams();
 
   const handleChange = (key, value) => {
-    setPaymentReportSearchData({ [key]: Number(value) });
+    setPaymentReportSearchData({ [key]: value === '' ? '' : Number(value) });
   };
+
+  const fromYears =
+    searchData.toYear !== '' ? YEARS.filter((y) => y <= searchData.toYear) : YEARS;
+
+  const toYears =
+    searchData.fromYear !== '' ? YEARS.filter((y) => y >= searchData.fromYear) : YEARS;
+
+  const sameYear = searchData.fromYear !== '' && searchData.fromYear === searchData.toYear;
+
+  const fromMonths =
+    sameYear && searchData.toMonth !== ''
+      ? MONTHS.filter((m) => m.value <= searchData.toMonth)
+      : MONTHS;
+
+  const toMonths =
+    sameYear && searchData.fromMonth !== ''
+      ? MONTHS.filter((m) => m.value >= searchData.fromMonth)
+      : MONTHS;
 
   return (
     <FiltersWrapper>
       <FilterGroup>
-        <FilterLabel>Սկիզբ</FilterLabel>
+        <FilterLabel>{'Սկիզբ'}</FilterLabel>
         <Select
           value={searchData.fromYear}
           onChange={(e) => handleChange('fromYear', e.target.value)}
         >
-          {YEARS.map((year) => (
+          <option value="">{'Տարի'}</option>
+          {fromYears.map((year) => (
             <option key={year} value={year}>
               {year}
             </option>
@@ -53,7 +71,8 @@ const PaymentReportFilters = () => {
           value={searchData.fromMonth}
           onChange={(e) => handleChange('fromMonth', e.target.value)}
         >
-          {MONTHS.map((month) => (
+          <option value="">{'Ամիս'}</option>
+          {fromMonths.map((month) => (
             <option key={month.value} value={month.value}>
               {month.label}
             </option>
@@ -61,15 +80,16 @@ const PaymentReportFilters = () => {
         </Select>
       </FilterGroup>
 
-      <Separator>—</Separator>
+      <Separator>{'—'}</Separator>
 
       <FilterGroup>
-        <FilterLabel>Ավարտ</FilterLabel>
+        <FilterLabel>{'Ավարտ'}</FilterLabel>
         <Select
           value={searchData.toYear}
           onChange={(e) => handleChange('toYear', e.target.value)}
         >
-          {YEARS.map((year) => (
+          <option value="">{'Տարի'}</option>
+          {toYears.map((year) => (
             <option key={year} value={year}>
               {year}
             </option>
@@ -79,7 +99,8 @@ const PaymentReportFilters = () => {
           value={searchData.toMonth}
           onChange={(e) => handleChange('toMonth', e.target.value)}
         >
-          {MONTHS.map((month) => (
+          <option value="">{'Ամիս'}</option>
+          {toMonths.map((month) => (
             <option key={month.value} value={month.value}>
               {month.label}
             </option>

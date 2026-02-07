@@ -188,7 +188,7 @@ export const SIDEBAR_ITEMS = [
     name: 'Statement',
     to: '/statement/payment-report',
     icons: { default: BillingIcon, active: BillingIconActive },
-    route: '/statement/payment-report',
+    route: '/statement',
     roles: ['Super Admin', 'Hr Manager', 'General Manager'],
     submenu: [
       {

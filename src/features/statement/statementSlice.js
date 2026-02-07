@@ -29,6 +29,8 @@ const statementSlice = createSlice({
       })
       .addCase(getMonthlyPayments.rejected, (state, { payload }) => {
         state.loading.monthlyPayments = false;
+        state.monthlyPayments = [];
+
         state.error = payload;
       })
       .addCase(getHalfYearlySubscribers.pending, (state) => {

@@ -61,6 +61,8 @@ const PaymentReport = () => {
     },
   ];
 
+  const hasAllFilters = paymentSearchData.fromYear !== '' && paymentSearchData.toYear !== '';
+
   useEffect(() => {
     dispatch(getMonthlyPayments(paymentSearchData));
   }, [paymentSearchData, dispatch]);
@@ -69,14 +71,16 @@ const PaymentReport = () => {
     <>
       <ViewContainer>
         <PaymentReportFilters />
-        <FilterContainerPayment>
-          {!loading.monthlyPayments && (
-            <Title className="inline_title ">
-              Ընդհանուր վճարված գումարը՝
-              {Number(data.totalAmount).toLocaleString('hy-AM')}
-            </Title>
-          )}
-        </FilterContainerPayment>
+        {hasAllFilters && (
+          <FilterContainerPayment>
+            {!loading.monthlyPayments && (
+              <Title className="inline_title ">
+                Ընդհանուր վճարված գումարը՝
+                {Number(data.totalAmount).toLocaleString('hy-AM')}
+              </Title>
+            )}
+          </FilterContainerPayment>
+        )}
         <MuiTable
           rowCount={paymentSearchData.size}
           data={data?.data?.content || []}
